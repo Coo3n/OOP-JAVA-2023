@@ -16,51 +16,54 @@ public class Main {
             new Manul()
     ));
 
-    private static final List<Hedgehogs> HEDGEHOGS_LIST = Collections.emptyList();
-    private static final List<Feline> FELINE_LIST = Collections.emptyList();
-    private static final List<Predatory> PREDATORY_LIST = Collections.emptyList();
+    private static final List<Predatory> PREDATORY_LIST = new ArrayList<>(List.of(
+            new Lynx(),
+            new Manul()
+    ));
+
+    private static final List<Hedgehogs> HEDGEHOGS_LIST = new ArrayList<>(List.of(
+            new CommonHedgehog()
+    ));
+
+    private static final List<? super Mammals> firstCollection = new ArrayList<>();
+    private static final List<? super Feline> secondCollection = new ArrayList<>();
+    private static final List<? super Predatory> thirdCollection = new ArrayList<>();
+
 
     private static void segregate(
             List<? extends Mammals> mammals,
-            List<CommonHedgehog> collection1,
-            List<Predatory> collection2,
-            List<Predatory> collection3
+            List<? super Mammals> firstCollection,
+            List<? super Manul> secondCollection,
+            List<? super Predatory> thirdCollection
     ) {
-        Logger.getLogger("MyTag").log(Level.INFO, "firstSegregate");
         mammals.forEach(item -> {
-            Class<? extends Mammals> itemClass = item.getClass();
-            int cnt = 0;
-            if (Hedgehogs.class.isAssignableFrom(itemClass) ) {
-                //add
-                cnt++;
+            if (item instanceof CommonHedgehog) {
+                firstCollection.add(item);
             }
 
-            if (Insectivores.class.isAssignableFrom(itemClass) ) {
-                if(cnt > 0) {
-                    ///
-                } else {
-
-                }
+            if (item instanceof Lynx) {
+                thirdCollection.add((Lynx) (item));
             }
 
-            if (Chordal.class.isAssignableFrom(itemClass)) {
-                if(cnt > 0) {
-                    ///
-                } else {
-
-                }
-            }
-
-
-            if (Feline.class.isAssignableFrom(itemClass) ||
-                    Manul.class.isAssignableFrom(itemClass) ||
-                    Predatory.class.isAssignableFrom(itemClass)) {
-
+            if (item instanceof Manul) {
+                secondCollection.add((Manul) (item));
             }
         });
     }
 
 
     public static void main(String[] args) {
+        segregate(
+                MAMMALS_LIST,
+                firstCollection,
+                secondCollection,
+                thirdCollection
+        );
+
+        segregate(PREDATORY_LIST,
+                firstCollection,
+                secondCollection,
+                thirdCollection
+        );
     }
 }
