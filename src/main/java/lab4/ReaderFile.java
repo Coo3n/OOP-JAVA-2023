@@ -1,10 +1,10 @@
 package lab4;
 
 import lab4.exceptions.InvalidFileFormatException;
-import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,24 +14,24 @@ public class ReaderFile {
     private static ReaderFile instance;
     private BufferedReader bufferedReader;
 
-    private ReaderFile() {
-    }
-
-    public static ReaderFile getInstance() {
-        if (instance == null) {
-            instance = new ReaderFile();
-        }
-        return instance;
+    public ReaderFile() {
     }
 
 
-    @SneakyThrows
     public Map<String, String> getDictionaryOfTextFile(File file) {
         if (!file.exists()) {
-            throw new InvalidFileFormatException();
+            try {
+                throw new InvalidFileFormatException();
+            } catch (InvalidFileFormatException e) {
+                e.printStackTrace();
+            }
         }
 
-        bufferedReader = new BufferedReader(new FileReader(file));
+        try {
+            bufferedReader = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return bufferedReader.lines()
                 .filter(str -> !str.isEmpty())
@@ -51,13 +51,20 @@ public class ReaderFile {
                 ));
     }
 
-    @SneakyThrows
     public String getTextFile(File file) {
         if (!file.exists()) {
-            throw new InvalidFileFormatException();
+            try {
+                throw new InvalidFileFormatException();
+            } catch (InvalidFileFormatException e) {
+                e.printStackTrace();
+            }
         }
 
-        bufferedReader = new BufferedReader(new FileReader(file));
+        try {
+            bufferedReader = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return bufferedReader.lines()
                 .filter(str -> !str.isEmpty())

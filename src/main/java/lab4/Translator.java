@@ -1,12 +1,14 @@
 package lab4;
 
-import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
-@AllArgsConstructor
 public class Translator {
     private Map<String, String> dictionary;
+
+    public Translator(Map<String, String> dictionary) {
+        this.dictionary = dictionary;
+    }
 
     public String getTranslateString(String inputText) {
         String translatedString = inputText.trim().toLowerCase();

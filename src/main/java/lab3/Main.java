@@ -4,10 +4,7 @@ package lab3;
 import lab3.hierarchies_animals.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
     private static final List<Mammals> MAMMALS_LIST = new ArrayList<>(List.of(
@@ -61,6 +58,12 @@ public class Main {
         );
 
         segregate(PREDATORY_LIST,
+                firstCollection,
+                secondCollection,
+                thirdCollection
+        );
+
+        segregate(HEDGEHOGS_LIST,
                 firstCollection,
                 secondCollection,
                 thirdCollection
